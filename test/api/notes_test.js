@@ -13,10 +13,10 @@ describe('basic notes crud', function() {
   it('should be able to create a note', function(done) {
     chai.request('http://localhost:3000')
     .post('/api/notes')
-    .send({noteBody: 'hello world'})
+    .send({noteBody: 'hello'})
     .end(function(err, res) {
       expect(err).to.eql(null);
-      expect(res.body.noteBody).to.eql('hello world');
+      expect(res.body.noteBody).to.eql('hello');
       expect(res.body).to.have.property('_id');
       id = res.body._id;
       done();
@@ -26,7 +26,7 @@ describe('basic notes crud', function() {
   it('should be able to check validation', function(done) {
     chai.request('http://localhost:3000')
     .post('/api/notes')
-    .send({noteBody: 'rake'})
+    .send({noteBody: 'ra'})
     .end(function(err, res) {
       expect(err).to.eql(null);
       expect(res.status).to.eql(500);
@@ -50,7 +50,7 @@ describe('basic notes crud', function() {
     .get('/api/notes/' + id)
     .end(function(err, res) {
       expect(err).to.eql(null);
-      expect(res.body.noteBody).to.eql('hello world');
+      expect(res.body.noteBody).to.eql('hello');
       done();
     });
   });
