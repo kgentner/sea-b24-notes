@@ -7,9 +7,9 @@ function validator(val) {
     return false;
   }
 }
-var noteValidator = [validator, 'Uh Oh! Validation Failed!'];
+
 var noteSchema = mongoose.Schema({
-  noteBody: {type: String, validate: noteValidator}
+  noteBody: {type: String, validate: validator}
 });
 
 module.exports = mongoose.model('Note', noteSchema);

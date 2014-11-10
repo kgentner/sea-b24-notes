@@ -30,7 +30,8 @@ describe('basic notes crud', function() {
     .end(function(err, res) {
       expect(err).to.eql(null);
       expect(res.status).to.eql(500);
-      expect(res.body.noteBody.message).to.eql('Uh Oh! Validation Failed!');
+      expect(res.body.message).to.eql('Validation failed');
+      //expect(res.body.noteBody.message).to.eql('Uh Oh! Validation Failed!');
       done();
     });
   });

@@ -2,7 +2,7 @@
 var Note = require('../models/note');
 
 module.exports = function(app) {
-  app.get('/api/notes', function(req ,res) {
+  app.get('/api/notes', function(req, res) {
     Note.find({}, function(err, data) {
       if (err) return res.status(500).send('there was an error');
       res.json(data);
@@ -19,7 +19,7 @@ module.exports = function(app) {
   app.post('/api/notes', function(req, res) {
     var note = new Note(req.body);
     note.save(function(err, data) {
-      if (err) return res.status(500).send(err.errors);
+      if (err) return res.status(500).send(err);
       res.json(data);
     });
   });
