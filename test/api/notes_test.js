@@ -1,3 +1,4 @@
+'use strict';
 process.env.MONGO_URL = 'mongodb://localhost/notes_test';
 var chai = require('chai');
 var chaihttp = require('chai-http');
@@ -18,6 +19,18 @@ describe('basic notes crud', function() {
       expect(res.body.noteBody).to.eql('hello world');
       expect(res.body).to.have.property('_id');
       id = res.body._id;
+      done();
+    });
+  });
+
+  it('should be able to check validation', function(done) {
+    chai.request('http://localhost:3000')
+    .post('/api/notes')
+    .send({noteBody: 'rake'})
+    .end(function(err, res) {
+      expect(err).to.eql(null);
+      expect(res.status).to.eql(500);
+      expect(res.body.noteBody.message).to.eql('Uh Oh! Validation Failed!');
       done();
     });
   });
