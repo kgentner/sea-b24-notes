@@ -1,3 +1,4 @@
+'use strict';
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyparser = require('body-parser');
@@ -5,7 +6,11 @@ var app = express();
 
 app.use(bodyparser.json());
 
-mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost/notes_development');
+mongoose
+.connect(
+  process.env.MONGOLAB_URI ||
+  process.env.MONGO_URL ||
+  'mongodb://localhost/notes_test');
 
 require('./routes/notes_routes')(app);
 
