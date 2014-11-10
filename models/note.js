@@ -1,6 +1,5 @@
 'use strict';
 var mongoose = require('mongoose');
-var noteSchema = mongoose.Schema;
 
 function validator(val) {
   if (val.length < 5) {
@@ -9,7 +8,10 @@ function validator(val) {
 }
 
 var noteSchema = mongoose.Schema({
-  noteBody: {type: String, validate: validator}
+  noteBody: {
+    type: String,
+    validate: [validator, 'Note must be longer than 4 characters.']
+  }
 });
 
 module.exports = mongoose.model('Note', noteSchema);
