@@ -4,7 +4,8 @@
   "description": "a note taking web app",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/grunt-cli/bin/grunt",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,7 @@
     "jwt-simple": "^0.2.0",
     "mongoose": "^3.8.18",
     "passport": "^0.2.1",
-    "passport-http": "^0.2.2"
+    "passport-http": "^0.2.2",
+    "moment": "^2.8.3"
   }
 }

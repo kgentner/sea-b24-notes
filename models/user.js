@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jwt-simple');
+var moment = require('moment');
 
 var userSchema = mongoose.Schema({
   basic: {
@@ -20,12 +21,12 @@ userSchema.methods.validPassword = function(password) {
 };
 
 userSchema.methods.generateToken = function(secret) {
-  var self = this;
+  var _this = this;
   var token = jwt.encode({
-    iss: self._id 
+    iss: _this._id,
+    expirationDate: moment().add(10, 'minute').valueOf()
   }, secret);
   return token;
 };
 
 module.exports = mongoose.model('User', userSchema);
-//

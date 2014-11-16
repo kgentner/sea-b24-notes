@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose');
 
 var noteSchema = mongoose.Schema({
@@ -5,4 +7,3 @@ var noteSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model('Note', noteSchema);
-//
