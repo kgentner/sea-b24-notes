@@ -1,6 +1,6 @@
 'use strict';
-/*Thanks to Charles Renwick, Stephanie Lingwood, Joe Elsey, and James Hurliman
-For the help*/
+/*Thanks to Charles Renwick, Stephanie Lingwood, Joe Elsey, James Hurliman,
+and Paul Laskowski for the help*/
 
 var express = require('express');
 var mongoose = require('mongoose');
@@ -24,6 +24,7 @@ notesRouter.use(jwtauth);
 
 require('./routes/users_routes')(app, passport);
 require('./routes/notes_routes')(notesRouter);
+require('./routes/admins_routes')(app);
 app.use('/v1', notesRouter);
 
 app.set('port', process.env.PORT || 3000);

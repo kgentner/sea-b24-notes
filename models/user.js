@@ -9,7 +9,8 @@ var userSchema = mongoose.Schema({
   basic: {
     email: String,
     password: String
-  }
+  },
+  role: String //e.g. admin, generic, etc.
 });
 
 userSchema.methods.generateHash = function(password) {
@@ -24,7 +25,8 @@ userSchema.methods.generateToken = function(secret) {
   var _this = this;
   var token = jwt.encode({
     iss: _this._id,
-    expirationDate: moment().add(10, 'minute').valueOf()
+    expirationDate: moment().add(1, 'day').valueOf(),
+    role: _this.role
   }, secret);
   return token;
 };
