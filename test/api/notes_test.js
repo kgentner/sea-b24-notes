@@ -130,7 +130,6 @@ describe('Admin & Admin Access', function() {
     .set({'jwt': jwtToken}) //user is admin@example.com
     .end(function(err, res) {
       expect(err).to.eql(null);
-      //console.log(res);
       expect(res.text).to.eql('welcome to admin');
       done();
     });
@@ -172,7 +171,7 @@ describe('Notes CRUD', function() {
     .set({'jwt': jwtToken})
     .end(function(err, res) {
       expect(err).to.eql(null);
-      expect(Array.isArray(res.body)).to.be.true;
+      expect(Array.isArray(res.body)).to.eql(true);
       done();
     });
   });
