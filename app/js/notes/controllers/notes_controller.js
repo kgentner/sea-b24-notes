@@ -14,7 +14,7 @@ module.exports = function(app) {
         console.log(data);
       });
     };
-
+//
     $scope.saveNewNote = function() {
       $http({
         method: 'POST',
