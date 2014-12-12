@@ -10,7 +10,7 @@ describe('resource service', function() {
   var notesService;
   var testNote = {'_id': '1', 'noteBody': 'hipster ipsum'};
 
-  beforeEach(angular.mock.inject(function(ResourceBackend, _$httpBackend_){
+  beforeEach(angular.mock.inject(function(ResourceBackend, _$httpBackend_) {
     Service = ResourceBackend;
     $httpBackend = _$httpBackend_;
     notesService = new Service('notes');
@@ -39,6 +39,27 @@ describe('resource service', function() {
     .success(function(data) {
       expect(data.noteBody).toEqual('hipster ipsum');
       expect(data._id).toEqual('1');
+    });
+
+    $httpBackend.flush();
+  });
+
+  it('should be able to save an existing note', function() {
+    $httpBackend.expectPUT('/api/notes/1').respond(200, testNote);
+    notesService.save(testNote)
+    .success(function(data) {
+      expect(data.noteBody).toEqual('hipster ipsum');
+      expect(data._id).toEqual('1');
+    });
+
+    $httpBackend.flush();
+  });
+
+  it('should be able to delete an existing note', function() {
+    $httpBackend.expectDELETE('/api/notes/1').respond(200, {msg: 'deleted!'});
+    notesService.delete(testNote)
+    .success(function(data) {
+      expect(data).toEqual({msg: 'deleted!'});
     });
 
     $httpBackend.flush();

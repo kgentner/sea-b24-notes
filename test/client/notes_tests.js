@@ -35,7 +35,6 @@ describe('NotesController', function() {
       $httpBackend.expectGET('/api/notes').respond(200, [{'noteBody': 'test note', '_id': '1'}]);
 
       $scope.index();
-  debugger;
       $httpBackend.flush();
 
       expect($scope.notes).toBeDefined();
@@ -43,10 +42,10 @@ describe('NotesController', function() {
       expect(typeof $scope.notes[0]).toBe('object');
       expect($scope.notes[0].noteBody).toBe('test note');
     });
-    
+
     it('should save a new note', function() {
       $httpBackend.expectPOST('/api/notes').respond(200, {'noteBody': 'test note', '_id': 1});
-      $scope.notes = []; 
+      $scope.notes = [];
       $scope.newNote = {'noteBody': 'test note'};
       $scope.saveNewNote();
 
