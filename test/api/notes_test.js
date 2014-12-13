@@ -29,7 +29,7 @@ describe('basic notes crud', function() {
     .get('/api/notes')
     .end(function(err, res) {
       expect(err).to.eql(null);
-      expect(Array.isArray(res.body)).to.be.true;
+      expect(Array.isArray(res.body)).to.eql(true);
       done();
     });
   });

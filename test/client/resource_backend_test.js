@@ -46,9 +46,10 @@ describe('resource service', function() {
 
   it('should be able to save an existing note', function() {
     $httpBackend.expectPUT('/api/notes/1').respond(200, testNote);
+    testNote.noteBody = 'presto change-o';
     notesService.save(testNote)
     .success(function(data) {
-      expect(data.noteBody).toEqual('hipster ipsum');
+      expect(data.noteBody).toEqual('presto change-o');
       expect(data._id).toEqual('1');
     });
 
@@ -56,10 +57,10 @@ describe('resource service', function() {
   });
 
   it('should be able to delete an existing note', function() {
-    $httpBackend.expectDELETE('/api/notes/1').respond(200, {msg: 'deleted!'});
+    $httpBackend.expectDELETE('/api/notes/1').respond(200, {msg: 'success!'});
     notesService.delete(testNote)
     .success(function(data) {
-      expect(data).toEqual({msg: 'deleted!'});
+      expect(data).toEqual({msg: 'success!'});
     });
 
     $httpBackend.flush();
