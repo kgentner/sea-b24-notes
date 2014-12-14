@@ -1,7 +1,9 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('notesCtrl', ['$scope', '$http', 'ResourceBackend', '$cookies', '$location', function($scope, $http, ResourceBackend, $cookies, $location) {
+  app.controller('notesCtrl', ['$scope', '$http', 'ResourceBackend', '$cookies', '$location',
+    function($scope, $http, ResourceBackend, $cookies, $location) {
+
     var notesBackend = new ResourceBackend('notes');
     if (!$cookies.jwt || !$cookies.jwt.length > 0) return $location.path('/users');
 
@@ -25,7 +27,7 @@ module.exports = function(app) {
     $scope.saveNote = function(note) {
       notesBackend.save(note)
       .success(function() {
-        note.editing = false; 
+        note.editing = false;
       });
     };
 
