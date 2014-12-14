@@ -14,15 +14,15 @@ module.exports = function(grunt) {
       options: {
         jshintrc: true
       },
-      src: ['models/**/*.js', 'server.js', 'routes/**/*.js',  'Gruntfile.js',
-      'app/js/**/**/*.js', 'test/api/*.js', 'test/client/*.js',
-      'karma.config.js']
+      src: ['server.js', 'Gruntfile.js', 'karma.config.js', 'test/api/*.js',
+      'test/client/*.js', 'routes/**/*.js', 'models/**/*.js', 'lib/*.js',
+      'app/js/**/**/*.js']
     },
 
     jscs: {
-      src: ['models/**/*.js', 'server.js', 'routes/**/*.js',  'Gruntfile.js',
-      'app/js/**/**/*.js', 'test/api/*.js', 'test/client/*.js',
-      'karma.config.js'],
+      src: ['server.js', 'Gruntfile.js', 'karma.config.js', 'test/api/*.js',
+      'test/client/*.js', 'routes/**/*.js', 'models/**/*.js', 'lib/*.js',
+      'app/js/**/**/*.js'],
       options: {
         config: '.jscsrc'
       }

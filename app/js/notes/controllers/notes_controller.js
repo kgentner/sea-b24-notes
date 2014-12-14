@@ -1,22 +1,28 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('notesCtrl', ['$scope', '$http', 'ResourceBackend', '$cookies', '$location',
-    function($scope, $http, ResourceBackend, $cookies, $location) {
+  app.controller('notesCtrl', ['$scope', '$http', 'ResourceBackend', 'authService',
+    function($scope, $http, ResourceBackend, authService) {
 
     var notesBackend = new ResourceBackend('notes');
-    if (!$cookies.jwt || !$cookies.jwt.length > 0) return $location.path('/users');
 
-    $http.defaults.headers.common['jwt'] = $cookies.jwt;
+    //log out of the notes application & return to log in
+    $scope.logOut = function() {
+      authService.logOut();
+    };
 
+    //get all notes
     $scope.index = function() {
+      authService.isAuthenticated();
       notesBackend.index()
       .success(function(data) {
         $scope.notes = data;
       });
     };
 
+    //save a new note
     $scope.saveNewNote = function(newNote) {
+      authService.isAuthenticated();
       notesBackend.saveNew(newNote)
       .success(function(data) {
         $scope.notes.push(data);
@@ -24,14 +30,18 @@ module.exports = function(app) {
       });
     };
 
+    //save a modified note
     $scope.saveNote = function(note) {
+      authService.isAuthenticated();
       notesBackend.save(note)
       .success(function() {
         note.editing = false;
       });
     };
 
+    //delete a note
     $scope.deleteNote = function(note) {
+      authService.isAuthenticated();
       notesBackend.delete(note)
       .success(function() {
         $scope.notes.splice($scope.notes.indexOf(note), 1);

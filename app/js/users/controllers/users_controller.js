@@ -1,13 +1,16 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('UsersCtrl', ['$scope', '$http', '$cookies', '$base64', '$location', function($scope, $http, $cookies, $base64, $location){
+  app.controller('UsersCtrl', ['$scope', '$http', '$cookies', '$base64', '$location',
+    function($scope, $http, $cookies, $base64, $location) {
+
     $scope.errors = [];
     $scope.signIn = function() {
       $scope.errors = [];
       console.log($scope.user.email);
       console.log($scope.user.password);
-      $http.defaults.headers.common['Authorization'] = 'Basic ' + $base64.encode($scope.user.email + ':' + $scope.user.password);
+      $http.defaults.headers.common['Authorization'] =
+        'Basic ' + $base64.encode($scope.user.email + ':' + $scope.user.password);
 
       $http({
         method: 'GET',
@@ -27,7 +30,9 @@ module.exports = function(app) {
 
     $scope.signUp = function() {
       $scope.errors = [];
-      if ($scope.newUser.password !== $scope.newUser.passwordConfirmation) $scope.errors.push({msg: 'password and confirmation did not match'});
+      if ($scope.newUser.password !==
+        $scope.newUser.passwordConfirmation) $scope.errors.push({msg: 'password and confirmation did not match'});
+
       if (!$scope.newUser.email) $scope.errors.push({msg: 'did note specify a email'});
 
       if ($scope.errors.length) return;
@@ -35,7 +40,7 @@ module.exports = function(app) {
       $http({
         method: 'POST',
         url: 'api/users',
-        data: $scope.newUser,
+        data: $scope.newUser
       })
       .success(function(data) {
         console.log('success!');

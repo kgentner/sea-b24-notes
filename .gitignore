@@ -5,3 +5,4 @@ build/
 test/angular_testbundle.js
 **/*.sw?
 compare.js
+compare.html

@@ -1,17 +1,23 @@
 <div data-ng-controller="UsersCtrl">
   <div data-ng-hide="existingUser">
+    <div><h4>Enter your e-mail and password. Then select 'Create New User'</h4></div>
+    <div><h4>OR</h4></div>
+    <div><h4>Select 'log in to existing account'</h4></div>
     <form name="newUser">
-      <input type="text" data-ng-model="newUser.email">
-      <input type="password" data-ng-model="newUser.password">
-      <input type="password" data-ng-model="newUser.passwordConfirmation">
+      <input type="text" data-ng-model="newUser.email" placeholder="email">
+      <input type="password" data-ng-model="newUser.password" placeholder="password">
+      <input type="password" data-ng-model="newUser.passwordConfirmation" placeholder="password confirmation">
       <button data-ng-click="signUp()">Create New User</button>
     </form>
   </div>
   <div data-ng-show="existingUser">
+    <div><h4>Enter your e-mail and password. Then select 'Log In'</h4></div>
+    <div><h4>OR</h4></div>
+    <div><h4>Select 'Create New User'</h4></div>
     <form name="userForm">
-      <input type="text" data-ng-model="user.email">
-      <input type="password" data-ng-model="user.password">
-      <button data-ng-click="signIn()">Sign In</button> 
+      <input type="text" data-ng-model="user.email" placeholder="email">
+      <input type="password" data-ng-model="user.password" placeholder="password">
+      <button data-ng-click="signIn()">Sign In</button>
     </form>
   </div>
 
