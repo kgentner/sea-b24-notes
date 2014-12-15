@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('notesCtrl', ['$scope', '$http', 'ResourceBackend', 'authService',
-    function($scope, $http, ResourceBackend, authService) {
+  app.controller('notesCtrl', ['$scope', '$http', '$location', 'ResourceBackend', 'authService',
+    function($scope, $http, $location, ResourceBackend, authService) {
 
     var notesBackend = new ResourceBackend('notes');
 
@@ -17,6 +17,9 @@ module.exports = function(app) {
       notesBackend.index()
       .success(function(data) {
         $scope.notes = data;
+      })
+      .error(function() {
+        $location.path('/users');
       });
     };
 

@@ -9,7 +9,6 @@ module.exports = function(app) {
               fieldname: '=',
               resourcename: '@'},
       controller: function($scope) {
-        console.log($scope.save);
         $scope.saveResource = function() {
           $scope.save({resource: $scope.resource});
           $scope.resource = null;
