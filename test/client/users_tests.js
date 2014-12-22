@@ -1,4 +1,4 @@
-  'use strict';
+'use strict';
 
 require('../../app/js/client');
 require('angular-mocks');
@@ -7,7 +7,7 @@ describe('UsersController', function() {
   var $controllerConstructor;
   var $httpBackend;
   var $scope;
-  var $cookies;
+  var $cookies = {jwt: 'superdupersecrethash'};
 
   beforeEach(angular.mock.module('notesApp'));
 
@@ -45,17 +45,15 @@ describe('UsersController', function() {
     // });
 
     it('should log in an existing user', function() {
-      $httpBackend.expectGET('/api/users').respond(200, {'jwt': 'super duper secret hash'});
-
+      $httpBackend.expectGET('/api/users').respond(200, $cookies.jwt);
+      //$cookies.jwt;
       $scope.user = {'email': 'test@example.com', 'password': 'testing123'};
       $scope.signIn();
 
       $httpBackend.flush();
 
-      //expect($cookies.jwt).toBeDefined();
-      //expect(typeof $cookies.jwt).toBe('object');
-      expect($cookies.jwt).toBe('super duper secret hash');
-      //expect($scope.user).toBe(null);
+      expect($cookies.jwt).toBeDefined();
+      expect($scope.message).toBe('success');
     });
 
     // it('should create a new user', function() {

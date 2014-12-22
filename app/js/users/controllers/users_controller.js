@@ -26,6 +26,8 @@ module.exports = function(app) {
         url: '/api/users'
       })
       .success(function(data) {
+        //console.log(data);
+        $scope.message = ('success');
         $cookies.jwt = data.jwt;
         $location.path('/notes');
       })
