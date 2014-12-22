@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('notesCtrl', ['$scope', '$http', '$location', 'ResourceBackend', 'authService',
-    function($scope, $http, $location, ResourceBackend, authService) {
+  app.controller('notesCtrl', ['$scope', '$http', '$location', '$cookies', 'ResourceBackend', 'authService',
+    function($scope, $http, $location, $cookies, ResourceBackend, authService) {
 
     var notesBackend = new ResourceBackend('notes');
 
@@ -25,12 +25,16 @@ module.exports = function(app) {
 
     //save a new note
     $scope.saveNewNote = function(newNote) {
-      authService.isAuthenticated();
-      notesBackend.saveNew(newNote)
-      .success(function(data) {
-        $scope.notes.push(data);
-        $scope.newNote = null;
-      });
+      if (newNote === undefined || newNote === null) {
+        return $location.path('/notes');
+      } else {
+        authService.isAuthenticated();
+        notesBackend.saveNew(newNote)
+        .success(function(data) {
+          $scope.notes.push(data);
+          $scope.newNote = null;
+        });
+      }
     };
 
     //save a modified note

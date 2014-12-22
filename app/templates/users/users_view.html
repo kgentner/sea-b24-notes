@@ -1,4 +1,4 @@
-<div data-ng-controller="UsersCtrl">
+<div>
   <div data-ng-hide="existingUser">
     <div><h4>Create a new user account:</h4></div>
     <form name="newUser">
@@ -10,7 +10,7 @@
   </div>
   <div data-ng-show="existingUser">
     <div><h4>Sign in if you are an existing user:</h4></div>
-    <form name="userForm">
+    <form name="user">
       <input type="text" data-ng-model="user.email" placeholder="email">
       <input type="password" data-ng-model="user.password" placeholder="password">
       <button data-ng-click="signIn()">Sign In</button>
@@ -18,4 +18,7 @@
   </div>
   <div><h4>OR</h4></div>
   <button data-ng-click="existingUser = !existingUser">{{existingUser ? 'Create New User' : 'Log in to existing account'}}</button>
+  <div data-ng-repeat="error in errors">
+    <p>{{error}}</p>
+  </div>
 </div>

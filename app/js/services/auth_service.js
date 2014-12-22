@@ -5,13 +5,17 @@ module.exports = function(app) {
 
     return {
       isAuthenticated: function() {
-        if (!$cookies.jwt || $cookies.jwt.length === 0) return $location.path('/users');
-        $http.defaults.headers.common['jwt'] = $cookies.jwt;
+        if (!$cookies.jwt) {
+          return $location.path('/users');
+        }
+        return ($http.defaults.headers.common['jwt'] = $cookies.jwt);
       },
       logOut: function() {
-        $cookies.jwt = null;
+        delete $cookies.jwt;
+        $http.defaults.headers.common['jwt'] = null;
         return $location.path('/users');
       }
+
     };
   }]);
 };

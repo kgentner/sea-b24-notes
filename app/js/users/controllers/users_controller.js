@@ -1,12 +1,23 @@
 'use strict';
 
 module.exports = function(app) {
-  app.controller('UsersCtrl', ['$scope', '$http', '$cookies', '$base64', '$location',
-    function($scope, $http, $cookies, $base64, $location) {
+  app.controller('UsersCtrl', [
+    '$scope', '$http', '$cookies', '$base64', '$location', 'validationService',
+    function($scope, $http, $cookies, $base64, $location, validationService) {
+
+    //if user still has a jwt, then go directly to notes template
+    if (!$cookies.jwt) {
+      $location.path('/users');
+    } else {
+      $location.path('/notes');
+    }
 
     $scope.errors = [];
     $scope.signIn = function() {
-      $scope.errors = [];
+
+      $scope.errors = validationService.isValid($scope.user.email, $scope.user.password, $scope.user.password);
+      if ($scope.errors.length) return;
+
       $http.defaults.headers.common['Authorization'] =
         'Basic ' + $base64.encode($scope.user.email + ':' + $scope.user.password);
 
@@ -15,25 +26,22 @@ module.exports = function(app) {
         url: '/api/users'
       })
       .success(function(data) {
-        console.log('success');
         $cookies.jwt = data.jwt;
         $location.path('/notes');
       })
       .error(function(data) {
-        console.log('error!');
-        console.log(data);
         $scope.errors.push(data);
       });
     };
 
     $scope.signUp = function() {
-      $scope.errors = [];
-      if ($scope.newUser.password !==
-        $scope.newUser.passwordConfirmation) $scope.errors.push({msg: 'password and confirmation did not match'});
 
-      if (!$scope.newUser.email) $scope.errors.push({msg: 'did note specify a email'});
-
+      $scope.errors = validationService.isValid($scope.newUser.email, $scope.newUser.password,
+        $scope.newUser.passwordConfirmation);
       if ($scope.errors.length) return;
+
+      $http.defaults.headers.common['Authorization'] =
+        'Basic ' + $base64.encode($scope.newUser.email + ':' + $scope.newUser.password);
 
       $http({
         method: 'POST',
@@ -41,12 +49,10 @@ module.exports = function(app) {
         data: $scope.newUser
       })
       .success(function(data) {
-        console.log('success!');
         $cookies.jwt = data.jwt;
         $location.path('/notes');
       })
       .error(function(data) {
-        console.log(data);
         $scope.errors.push(data);
       });
     };
