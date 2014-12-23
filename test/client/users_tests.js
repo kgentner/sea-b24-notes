@@ -7,7 +7,7 @@ describe('UsersController', function() {
   var $controllerConstructor;
   var $httpBackend;
   var $scope;
-  var $cookies = {jwt: 'superdupersecrethash'};
+  var $cookies = {jwt: 'super_duper_secret_hash'};
 
   beforeEach(angular.mock.module('notesApp'));
 
@@ -17,14 +17,14 @@ describe('UsersController', function() {
   }));
 
   it('should be able to create a controller', function() {
-    var usersController = $controllerConstructor('UsersCtrl', {$scope: $scope}, {$cookies: $cookies});
+    var usersController = $controllerConstructor('UsersCtrl', {$scope: $scope});
     expect(typeof usersController).toBe('object');
   });
 
   describe('rest request', function() {
     beforeEach(angular.mock.inject(function(_$httpBackend_) {
       $httpBackend = _$httpBackend_;
-      $controllerConstructor('UsersCtrl', {$scope: $scope}, {$cookies: $cookies});
+      $controllerConstructor('UsersCtrl', {$scope: $scope, $cookies: $cookies});
     }));
 
     afterEach(function() {
@@ -32,42 +32,27 @@ describe('UsersController', function() {
       $httpBackend.verifyNoOutstandingRequest();
     });
 
-    // it('make an call to index', function() {
-    //   $httpBackend.expectGET('/api/users').respond(200, [{'noteBody': 'test note', '_id': '1'}]);
-
-    //   $scope.index();
-    //   $httpBackend.flush();
-
-    //   expect($scope.notes).toBeDefined();
-    //   expect(Array.isArray($scope.notes)).toBeTruthy();
-    //   expect(typeof $scope.notes[0]).toBe('object');
-    //   expect($scope.notes[0].noteBody).toBe('test note');
-    // });
-
     it('should log in an existing user', function() {
-      $httpBackend.expectGET('/api/users').respond(200, $cookies.jwt);
-      //$cookies.jwt;
-      $scope.user = {'email': 'test@example.com', 'password': 'testing123'};
+      $httpBackend.expectGET('/api/users').respond(200, $cookies);
+
+      $scope.user = {email: 'test@example.com', password: 'testing123'};
       $scope.signIn();
 
       $httpBackend.flush();
 
-      expect($cookies.jwt).toBeDefined();
-      expect($scope.message).toBe('success');
+      expect($cookies.jwt).toBe('super_duper_secret_hash');
     });
 
-    // it('should create a new user', function() {
-    //   $httpBackend.expectPOST('/api/notes').respond(200, {'jwt': 'super duper secret hash'});
-    //   $scope.notes = [];
-    //   $scope.newNote = {'noteBody': 'test note'};
-    //   $scope.saveNewNote();
+    it('should create a new user', function() {
+      $httpBackend.expectPOST('/api/users').respond(200, $cookies);
 
-    //   $httpBackend.flush();
+      $scope.newUser = {email: 'tubby@example.com', password: 'testing123', passwordConfirmation: 'testing123'};
+      $scope.signUp();
 
-    //   expect($scope.notes.length).toBe(1);
-    //   expect($scope.notes[0].noteBody).toBe('test note');
-    //   expect($scope.newNote).toBe(null);
-    // });
+      $httpBackend.flush();
+
+      expect($cookies.jwt).toBe('super_duper_secret_hash');
+    });
 
   });
 });

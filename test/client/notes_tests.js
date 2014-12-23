@@ -7,6 +7,7 @@ describe('NotesController', function() {
   var $controllerConstructor;
   var $httpBackend;
   var $scope;
+  var $cookies = {jwt: 'super_duper_secret_hash'};
 
   beforeEach(angular.mock.module('notesApp'));
 
@@ -23,7 +24,8 @@ describe('NotesController', function() {
   describe('rest request', function() {
     beforeEach(angular.mock.inject(function(_$httpBackend_) {
       $httpBackend = _$httpBackend_;
-      $controllerConstructor('notesCtrl', {$scope: $scope});
+      $controllerConstructor('notesCtrl', {$scope: $scope, $cookies: $cookies});
+
     }));
 
     afterEach(function() {

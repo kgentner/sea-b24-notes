@@ -26,8 +26,6 @@ module.exports = function(app) {
         url: '/api/users'
       })
       .success(function(data) {
-        //console.log(data);
-        $scope.message = ('success');
         $cookies.jwt = data.jwt;
         $location.path('/notes');
       })
@@ -47,7 +45,7 @@ module.exports = function(app) {
 
       $http({
         method: 'POST',
-        url: 'api/users',
+        url: '/api/users',
         data: $scope.newUser
       })
       .success(function(data) {
