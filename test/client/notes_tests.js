@@ -25,7 +25,6 @@ describe('NotesController', function() {
     beforeEach(angular.mock.inject(function(_$httpBackend_) {
       $httpBackend = _$httpBackend_;
       $controllerConstructor('notesCtrl', {$scope: $scope, $cookies: $cookies});
-
     }));
 
     afterEach(function() {

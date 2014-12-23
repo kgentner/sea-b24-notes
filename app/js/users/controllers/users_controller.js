@@ -5,7 +5,7 @@ module.exports = function(app) {
     '$scope', '$http', '$cookies', '$base64', '$location', 'validationService',
     function($scope, $http, $cookies, $base64, $location, validationService) {
 
-    //if user still has a jwt, then go directly to notes template
+    //if user still has a $cookie.jwt, then go directly to notes template
     if (!$cookies.jwt) {
       $location.path('/users');
     } else {

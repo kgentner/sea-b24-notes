@@ -7,7 +7,7 @@ describe('UsersController', function() {
   var $controllerConstructor;
   var $httpBackend;
   var $scope;
-  var $cookies = {jwt: 'super_duper_secret_hash'};
+  var $cookies = {};
 
   beforeEach(angular.mock.module('notesApp'));
 
@@ -33,7 +33,7 @@ describe('UsersController', function() {
     });
 
     it('should log in an existing user', function() {
-      $httpBackend.expectGET('/api/users').respond(200, $cookies);
+      $httpBackend.expectGET('/api/users').respond(200, {jwt: 'super_duper_secret_hash'});
 
       $scope.user = {email: 'test@example.com', password: 'testing123'};
       $scope.signIn();
@@ -44,7 +44,7 @@ describe('UsersController', function() {
     });
 
     it('should create a new user', function() {
-      $httpBackend.expectPOST('/api/users').respond(200, $cookies);
+      $httpBackend.expectPOST('/api/users').respond(200, {jwt: 'super_duper_secret_hash'});
 
       $scope.newUser = {email: 'tubby@example.com', password: 'testing123', passwordConfirmation: 'testing123'};
       $scope.signUp();

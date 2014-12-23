@@ -25,16 +25,12 @@ module.exports = function(app) {
 
     //save a new note
     $scope.saveNewNote = function(newNote) {
-      if (newNote === undefined || newNote === null) {
-        return $location.path('/notes');
-      } else {
-        authService.isAuthenticated();
-        notesBackend.saveNew(newNote)
-        .success(function(data) {
-          $scope.notes.push(data);
-          $scope.newNote = null;
-        });
-      }
+      authService.isAuthenticated();
+      notesBackend.saveNew(newNote)
+      .success(function(data) {
+        $scope.notes.push(data);
+        $scope.newNote = null;
+      });
     };
 
     //save a modified note
